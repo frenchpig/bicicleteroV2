@@ -24,7 +24,7 @@ const adminItems = [
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [user, setUser] = useState<User | null>(null);
   const [superAdmin, setSuperAdmin] = useState(false);
 
@@ -98,9 +98,9 @@ export function Sidebar() {
           variant="ghost"
           size="sm"
           className="w-full justify-start gap-2.5 rounded-lg px-3 text-[#555] dark:text-[#AAAAAA] hover:bg-[#EFEFEF] dark:hover:bg-[#242424] hover:text-[#0D0D0D] dark:hover:text-white"
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
         >
-          {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          {resolvedTheme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           Toggle theme
         </Button>
         <Button

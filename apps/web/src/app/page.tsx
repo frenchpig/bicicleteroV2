@@ -1,15 +1,6 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { isAuthenticated } from '@/lib/auth';
-
+/** Sin DB/auth activo: entrada directa al panel admin (mocks). */
 export default function HomePage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace(isAuthenticated() ? '/dashboard' : '/login');
-  }, [router]);
-
-  return null;
+  redirect('/admin/dashboard');
 }

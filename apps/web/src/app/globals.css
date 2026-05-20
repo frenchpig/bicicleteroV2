@@ -14,27 +14,29 @@
   }
 }
 
+/* Tema Light — mockups/bicicletero-original/GUIA_DISENO.md */
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 5%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 5%;
+  :root,
+  .light {
+    --background: 210 33% 97%;
+    --foreground: 0 0% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
-    --primary: 0 0% 9%;
+    --popover-foreground: 0 0% 11%;
+    --primary: 207 61% 30%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 93%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 72% 51%;
+    --secondary: 207 41% 94%;
+    --secondary-foreground: 207 61% 30%;
+    --muted: 210 33% 97%;
+    --muted-foreground: 0 0% 38%;
+    --accent: 207 41% 94%;
+    --accent-foreground: 207 61% 30%;
+    --destructive: 0 68% 46%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 9%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 207 46% 55%;
     --radius: 0.5rem;
   }
 
@@ -61,7 +63,30 @@
   }
 }
 
-/* Before React hydrates, respect system preference so there's no flash */
+@media (prefers-color-scheme: light) {
+  :root:not(.light):not(.dark) {
+    --background: 210 33% 97%;
+    --foreground: 0 0% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 11%;
+    --primary: 207 61% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 207 41% 94%;
+    --secondary-foreground: 207 61% 30%;
+    --muted: 210 33% 97%;
+    --muted-foreground: 0 0% 38%;
+    --accent: 207 41% 94%;
+    --accent-foreground: 207 61% 30%;
+    --destructive: 0 68% 46%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 207 46% 55%;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not(.light):not(.dark) {
     --background: 0 0% 13%;

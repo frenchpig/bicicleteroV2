@@ -14,9 +14,14 @@ export const metadata: Metadata = {
   description: 'Fullstack monorepo app',
 };
 
+const themeInitScript = `(function(){try{var k='theme',t=localStorage.getItem(k),m=window.matchMedia('(prefers-color-scheme: dark)'),d=t==='dark'||(t!=='light'&&m.matches);var r=document.documentElement;r.classList.remove('light','dark');r.classList.add(d?'dark':'light');}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="es" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
