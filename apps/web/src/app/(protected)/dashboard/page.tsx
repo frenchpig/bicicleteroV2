@@ -13,9 +13,9 @@ export default function DashboardPage() {
 
   useEffect(() => {
     Promise.all([
-      api.get<Post[]>('/posts').then((r) => r.data.length),
+      api.get<Post[]>('/api/nest/posts').then((r) => r.data.length),
       currentUser?.role === 'SUPERADMIN'
-        ? api.get<User[]>('/users').then((r) => r.data.length)
+        ? api.get<User[]>('/api/users').then((r) => r.data.length)
         : Promise.resolve(null),
     ])
       .then(([posts, users]) => setStats({ posts, users: users ?? 0 }))

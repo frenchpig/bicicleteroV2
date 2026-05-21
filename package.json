@@ -9,7 +9,8 @@
     "libs/*"
   ],
   "scripts": {
-    "dev": "nx run-many --target=serve --projects=api,web --parallel",
+    "dev": "nx run api:serve & nx run web:serve",
+    "dev:parallel": "nx run-many --target=serve --projects=api,web --parallel",
     "dev:web": "nx serve web",
     "dev:api": "nx serve api",
     "build:web": "nx build web",
@@ -18,6 +19,9 @@
     "test": "nx run-many --target=test",
     "db:migrate": "cd apps/api && npx prisma migrate dev",
     "db:seed": "nx run api:db-seed",
+    "db:seed:reset": "nx run api:db-fresh",
+    "db:reset": "nx run api:db-reset",
+    "db:fresh": "nx run api:db-fresh",
     "db:generate": "npx prisma generate --schema=apps/api/prisma/schema.prisma"
   },
   "dependencies": {

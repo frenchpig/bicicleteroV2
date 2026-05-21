@@ -1,6 +1,8 @@
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-/** Sin DB/auth activo: entrada directa al panel admin (mocks). */
-export default function HomePage() {
-  redirect('/admin/dashboard');
+export default async function HomePage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('access_token')?.value;
+  redirect(token ? '/admin/dashboard' : '/login');
 }

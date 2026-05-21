@@ -1,0 +1,11 @@
+import * as bcrypt from 'bcrypt';
+
+export const BCRYPT_ROUNDS = 10;
+
+export async function hashPassword(plain: string): Promise<string> {
+  return bcrypt.hash(plain, BCRYPT_ROUNDS);
+}
+
+export async function verifyPassword(plain: string, stored: string): Promise<boolean> {
+  return bcrypt.compare(plain, stored);
+}

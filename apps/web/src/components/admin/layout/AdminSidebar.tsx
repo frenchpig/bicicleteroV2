@@ -13,9 +13,11 @@ import {
   LayoutDashboard,
   Monitor,
   Shield,
+  UserCog,
   Users,
 } from 'lucide-react';
 import { cn } from '@app/ui';
+import { isSuperAdmin } from '@/lib/auth';
 
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
@@ -39,6 +41,7 @@ interface AdminSidebarProps {
 }
 
 export function AdminSidebar({ collapsed, onToggleCollapse }: AdminSidebarProps) {
+  const showUsuarios = isSuperAdmin();
   const pathname = usePathname();
   const isActive = (path: string) => pathname.startsWith(path);
 
@@ -96,6 +99,22 @@ export function AdminSidebar({ collapsed, onToggleCollapse }: AdminSidebarProps)
               </Link>
             );
           })}
+          {showUsuarios && (
+            <Link
+              href="/admin/usuarios"
+              title={collapsed ? 'Usuarios' : undefined}
+              className={cn(
+                'mb-0.5 flex items-center gap-2.5 rounded-lg px-3 py-2 text-[0.8125rem] transition-colors',
+                collapsed && 'justify-center px-3',
+                isActive('/admin/usuarios')
+                  ? 'bg-[#1E4C7C] text-white dark:bg-cyan-600'
+                  : 'text-[#616161] hover:bg-[#EBF1F7] hover:text-[#1B1B1B] dark:text-slate-300 dark:hover:bg-zinc-800 dark:hover:text-white',
+              )}
+            >
+              <UserCog className="size-[18px] shrink-0" />
+              {!collapsed && 'Usuarios'}
+            </Link>
+          )}
         </div>
 
         <div className="mt-1 border-t border-black/10 pt-3 dark:border-zinc-800">

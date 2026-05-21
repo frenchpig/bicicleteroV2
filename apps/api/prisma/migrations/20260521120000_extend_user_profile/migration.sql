@@ -1,0 +1,20 @@
+-- Extend User profile; restrict Role to ADMIN and SUPERADMIN
+
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "nombre" TEXT NOT NULL DEFAULT 'Usuario';
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "apellido" TEXT NOT NULL DEFAULT 'Sistema';
+ALTER TABLE "User" ALTER COLUMN "nombre" DROP DEFAULT;
+ALTER TABLE "User" ALTER COLUMN "apellido" DROP DEFAULT;
+
+UPDATE "User" SET "role" = 'ADMIN' WHERE "role"::text = 'USER';
+
+ALTER TYPE "Role" RENAME TO "Role_old";
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'SUPERADMIN');
+ALTER TABLE "User" ALTER COLUMN "role" DROP DEFAULT;
+ALTER TABLE "User" ALTER COLUMN "role" TYPE "Role" USING (
+  CASE
+    WHEN "role"::text = 'SUPERADMIN' THEN 'SUPERADMIN'::"Role"
+    ELSE 'ADMIN'::"Role"
+  END
+);
+ALTER TABLE "User" ALTER COLUMN "role" SET DEFAULT 'ADMIN';
+DROP TYPE "Role_old";

@@ -39,7 +39,7 @@ export default function EmailConfigPage() {
   }, []);
 
   async function loadTemplates() {
-    const res = await api.get<EmailTemplate[]>('/email/templates');
+    const res = await api.get<EmailTemplate[]>('/api/nest/email/templates');
     setTemplates(res.data);
   }
 
@@ -49,7 +49,7 @@ export default function EmailConfigPage() {
     setErrorMsg(null);
     setSuccessMsg(null);
     try {
-      await api.post('/email/send-template', { to: testEmail, templateId: testTemplate.slug });
+      await api.post('/api/nest/email/send-template', { to: testEmail, templateId: testTemplate.slug });
       setSuccessMsg(`Email sent to ${testEmail}`);
       setTestEmail('');
       setTestTemplate(null);

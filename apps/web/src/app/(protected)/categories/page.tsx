@@ -30,7 +30,7 @@ export default function CategoriesPage() {
     useForm<CategoryFormData>({ resolver: zodResolver(categorySchema) });
 
   async function loadCategories() {
-    const res = await api.get<Category[]>('/categories');
+    const res = await api.get<Category[]>('/api/nest/categories');
     setCategories(res.data);
   }
 
@@ -52,9 +52,9 @@ export default function CategoriesPage() {
     setSubmitError(null);
     try {
       if (editing) {
-        await api.patch(`/categories/${editing.id}`, data);
+        await api.patch(`/api/nest/categories/${editing.id}`, data);
       } else {
-        await api.post('/categories', data);
+        await api.post('/api/nest/categories', data);
       }
       setOpen(false);
       loadCategories();
@@ -65,7 +65,7 @@ export default function CategoriesPage() {
 
   async function handleDelete(id: number) {
     if (!confirm('Delete this category?')) return;
-    await api.delete(`/categories/${id}`);
+    await api.delete(`/api/nest/categories/${id}`);
     loadCategories();
   }
 

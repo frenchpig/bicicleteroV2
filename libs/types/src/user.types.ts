@@ -1,23 +1,28 @@
 export enum Role {
-  USER = 'USER',
   ADMIN = 'ADMIN',
   SUPERADMIN = 'SUPERADMIN',
 }
 
 export interface User {
   id: number;
+  nombre: string;
+  apellido: string;
   email: string;
   role: Role;
   createdAt: string;
 }
 
 export interface CreateUserDto {
+  nombre: string;
+  apellido: string;
   email: string;
   password: string;
-  role?: Role;
+  role: Role;
 }
 
 export interface UpdateUserDto {
+  nombre?: string;
+  apellido?: string;
   email?: string;
   password?: string;
   role?: Role;

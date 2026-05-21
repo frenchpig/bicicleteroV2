@@ -8,6 +8,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { AuthRequest } from '../auth/interfaces/auth-request.interface';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -32,7 +33,7 @@ export class UsersController {
 
   @Patch(':id')
   update(
-    @Req() req: any,
+    @Req() req: AuthRequest,
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateUserDto,
   ) {
@@ -40,7 +41,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Req() req: any, @Param('id', ParseIntPipe) id: number) {
+  remove(@Req() req: AuthRequest, @Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id, req.user.userId);
   }
 }

@@ -17,7 +17,7 @@ const navItems = [
 ];
 
 const adminItems = [
-  { href: '/admin/users', label: 'Users', icon: Users },
+  { href: '/admin/usuarios', label: 'Users', icon: Users },
   { href: '/admin/email', label: 'Email Config', icon: Mail },
 ];
 
@@ -33,8 +33,8 @@ export function Sidebar() {
     setSuperAdmin(isSuperAdmin());
   }, []);
 
-  function handleLogout() {
-    clearAuth();
+  async function handleLogout() {
+    await clearAuth();
     router.push('/login');
   }
 

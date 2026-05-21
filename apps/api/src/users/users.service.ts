@@ -1,12 +1,19 @@
 import {
   Injectable, NotFoundException, ConflictException, ForbiddenException,
 } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { hashPassword } from '../common/password-hash.util';
 
-const SELECT_SAFE = { id: true, email: true, role: true, createdAt: true };
+const SELECT_SAFE = {
+  id: true,
+  nombre: true,
+  apellido: true,
+  email: true,
+  role: true,
+  createdAt: true,
+};
 
 @Injectable()
 export class UsersService {
@@ -26,9 +33,15 @@ export class UsersService {
     const exists = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (exists) throw new ConflictException('Email already in use');
 
-    const hashed = await bcrypt.hash(dto.password, 10);
+    const hashed = await hashPassword(dto.password);
     return this.prisma.user.create({
-      data: { ...dto, password: hashed },
+      data: {
+        nombre: dto.nombre,
+        apellido: dto.apellido,
+        email: dto.email,
+        password: hashed,
+        role: dto.role,
+      },
       select: SELECT_SAFE,
     });
   }
@@ -41,7 +54,6 @@ export class UsersService {
       if (exists) throw new ConflictException('Email already in use');
     }
 
-    // Prevent downgrading a SUPERADMIN if they are the last one
     if (target.role === 'SUPERADMIN' && dto.role && dto.role !== 'SUPERADMIN') {
       const superadminCount = await this.prisma.user.count({ where: { role: 'SUPERADMIN' } });
       if (superadminCount <= 1) {
@@ -49,10 +61,19 @@ export class UsersService {
       }
     }
 
-    const data: any = {};
+    const data: {
+      nombre?: string;
+      apellido?: string;
+      email?: string;
+      role?: UpdateUserDto['role'];
+      password?: string;
+    } = {};
+
+    if (dto.nombre !== undefined) data.nombre = dto.nombre;
+    if (dto.apellido !== undefined) data.apellido = dto.apellido;
     if (dto.email !== undefined) data.email = dto.email;
     if (dto.role !== undefined) data.role = dto.role;
-    if (dto.password) data.password = await bcrypt.hash(dto.password, 10);
+    if (dto.password) data.password = await hashPassword(dto.password);
 
     return this.prisma.user.update({ where: { id }, data, select: SELECT_SAFE });
   }

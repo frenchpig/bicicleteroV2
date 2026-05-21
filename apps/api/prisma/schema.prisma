@@ -8,16 +8,17 @@ datasource db {
 }
 
 enum Role {
-  USER
   ADMIN
   SUPERADMIN
 }
 
 model User {
   id        Int      @id @default(autoincrement())
+  nombre    String
+  apellido  String
   email     String   @unique
   password  String
-  role      Role     @default(USER)
+  role      Role     @default(ADMIN)
   createdAt DateTime @default(now())
   posts     Post[]
 }

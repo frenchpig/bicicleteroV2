@@ -32,7 +32,7 @@ export default function PostsPage() {
     useForm<PostFormData>({ resolver: zodResolver(postSchema) });
 
   async function loadPosts() {
-    const res = await api.get<Post[]>('/posts');
+    const res = await api.get<Post[]>('/api/nest/posts');
     setPosts(res.data);
   }
 
@@ -54,9 +54,9 @@ export default function PostsPage() {
     setSubmitError(null);
     try {
       if (editing) {
-        await api.patch(`/posts/${editing.id}`, data);
+        await api.patch(`/api/nest/posts/${editing.id}`, data);
       } else {
-        await api.post('/posts', data);
+        await api.post('/api/nest/posts', data);
       }
       setOpen(false);
       loadPosts();
@@ -67,7 +67,7 @@ export default function PostsPage() {
 
   async function handleDelete(id: number) {
     if (!confirm('Delete this post?')) return;
-    await api.delete(`/posts/${id}`);
+    await api.delete(`/api/nest/posts/${id}`);
     loadPosts();
   }
 

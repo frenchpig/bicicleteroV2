@@ -3,6 +3,16 @@ import { Role } from '@prisma/client';
 
 export class UpdateUserDto {
   @IsOptional()
+  @IsString()
+  @MinLength(2)
+  nombre?: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(2)
+  apellido?: string;
+
+  @IsOptional()
   @IsEmail()
   email?: string;
 
